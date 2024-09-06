@@ -18,17 +18,14 @@ exports.farmPlant = async () => {
     const land = await getLand(token);
     if (!land) {
       console.log(`[ BOT ] : cant get land info ${token.token}`);
-      return;
     }
     if (land.emptyLand.length == 0) {
       console.log(`[ BOT ] : no empty land ${token.token}`);
-      return;
     }
     const plant = await getPlantInfo(token);
 
     if (!plant) {
       console.log(`[ BOT ] : cant get plant info ${token.token}`);
-      return;
     }
     if (plant.length < land.emptyLand.length) {
       for (const buy of land.emptyLand) {
