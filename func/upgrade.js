@@ -24,7 +24,9 @@ exports.upgradeAnimal = async (value, type) => {
 
       if (Number(gold) > 500000 || Number(pet) <= 3000) {
         for (let index = 0; index < value; index++) {
-          if (Number(gold) > 500000) {
+          const users = await getUserInfo(token);
+          const goldN = users.goldenCoin || 0;
+          if (Number(goldN) > 500000) {
             const buy = await axios.post(
               "https://api.catopia.io/api/v1/store/buy",
               {
