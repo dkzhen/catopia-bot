@@ -24,64 +24,66 @@ exports.upgradeAnimal = async (value, type) => {
 
       if (Number(gold) > 500000 || Number(pet) <= 3000) {
         for (let index = 0; index < value; index++) {
-          const buy = await axios.post(
-            "https://api.catopia.io/api/v1/store/buy",
-            {
-              storeId: 4,
-              price: 60000,
-              unit: 1,
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token.token}`,
+          if (Number(gold) > 500000) {
+            const buy = await axios.post(
+              "https://api.catopia.io/api/v1/store/buy",
+              {
+                storeId: 4,
+                price: 60000,
+                unit: 1,
               },
-            }
-          );
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token.token}`,
+                },
+              }
+            );
 
-          const box = buy.data.data.buyData;
+            const box = buy.data.data.buyData;
 
-          console.log(
-            `[ BUY ] : buy box has been created : length : ${box.length} `
-          );
+            console.log(
+              `[ BUY ] : buy box has been created : length : ${box.length} `
+            );
 
-          const openBox = await axios.post(
-            "https://api.catopia.io/api/v1/chest/open-multiple",
-            {
-              petTypeIds: [type],
-              chestIds: box.map((item) => item.id),
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token.token}`,
+            const openBox = await axios.post(
+              "https://api.catopia.io/api/v1/chest/open-multiple",
+              {
+                petTypeIds: [type],
+                chestIds: box.map((item) => item.id),
               },
-            }
-          );
-          const boxReadyOpen = openBox.data.data.petsReceived;
-          console.log(
-            `[ OPEN ] : open box has been created : length : ${boxReadyOpen.length} `
-          );
-          const upgrade = await axios.post(
-            "https://api.catopia.io/api/v1/players/pet/fast-upgrade",
-            {
-              level: 1,
-              petTypeId: Number(type),
-            },
-            {
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${token.token}`,
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token.token}`,
+                },
+              }
+            );
+            const boxReadyOpen = openBox.data.data.petsReceived;
+            console.log(
+              `[ OPEN ] : open box has been created : length : ${boxReadyOpen.length} `
+            );
+            const upgrade = await axios.post(
+              "https://api.catopia.io/api/v1/players/pet/fast-upgrade",
+              {
+                level: 1,
+                petTypeId: Number(type),
               },
-            }
-          );
-          console.log(upgrade.data.data);
-          console.log(`[ UPGRADE ] : upgrade pets has been created.. `);
-          console.log(`[ BOT ] : wait 1 minute...`);
-          // await delay(1);
-          console.log(`[ BOT ] : Box ${index + 1} has been opened`);
+              {
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token.token}`,
+                },
+              }
+            );
+            console.log(upgrade.data.data);
+            console.log(`[ UPGRADE ] : upgrade pets has been created.. `);
+            console.log(`[ BOT ] : Box ${index + 1} has been opened`);
+          } else {
+            console.log(`[ ERROR ] : You don't have enough gold`);
+            return;
+          }
         }
-
         console.log(`[ BOT ] : buy animal done..`);
       } else {
         console.log(`[ ERROR ] : You don't have enough gold or pet`);
