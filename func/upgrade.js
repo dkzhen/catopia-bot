@@ -65,21 +65,7 @@ exports.upgradeAnimal = async (value, type) => {
             console.log(
               `[ OPEN ] : open box has been created : length : ${boxReadyOpen.length} `
             );
-            const upgrade = await axios.post(
-              "https://api.catopia.io/api/v1/players/pet/fast-upgrade",
-              {
-                level: 1,
-                petTypeId: Number(type),
-              },
-              {
-                headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${token.token}`,
-                },
-              }
-            );
-            console.log(upgrade.data.data);
-            console.log(`[ UPGRADE ] : upgrade pets has been created.. `);
+
             console.log(`[ BOT ] : Box ${index + 1} has been opened`);
           } else {
             console.log(`[ ERROR ] : You don't have enough gold`);

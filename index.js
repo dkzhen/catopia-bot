@@ -9,6 +9,8 @@ const { upgradeAnimal } = require("./func/upgrade");
 configDotenv();
 
 farmPlant();
+upgradeAnimal();
+claimMission();
 cron.schedule("*/12 * * * *", farmPlant);
 cron.schedule("0 * * * *", claimMission);
 cron.schedule("0 * * * *", upgradeAnimal);
